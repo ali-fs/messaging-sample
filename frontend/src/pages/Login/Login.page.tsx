@@ -2,6 +2,10 @@ import { useActionState, useCallback } from "react";
 import { loginUser } from "../../services/RestAPI/RestAPIList";
 import { setToStorage } from "../../services/storage/Storage";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../../services/Socket/SocketService";
+
+// TODO: We can create custom Input and Button component to prevent code duplication
+// TODO: We can separate login logics to a custom hook for better code structure
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +19,8 @@ const Login: React.FC = () => {
         const res = await loginUser(username, password);
         setToStorage("token", res.token);
         setToStorage("user", res.user);
+        socket.auth = { token: res.token };
+        socket.connect();
         navigate("/");
       } catch (e) {
         return { error: "Username or password incorrect" };

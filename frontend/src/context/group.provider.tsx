@@ -8,6 +8,7 @@ export const GroupProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const value = useMemo(() => {
     return { selectedGroup, setSelectedGroup };
   }, [selectedGroup, setSelectedGroup]);
+
   return (
     <GroupContext.Provider value={value}>{children}</GroupContext.Provider>
   );

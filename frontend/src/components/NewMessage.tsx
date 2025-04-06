@@ -1,8 +1,33 @@
-import { memo } from "react";
+import { memo, useActionState, useCallback } from "react";
+import { socket } from "../services/Socket/SocketService";
+import { ESocket } from "../@types";
+import useGroup from "../context/useGroup";
+
+// TODO: we can use useOptimistic to handle new message
 
 const NewMessage: React.FC = () => {
+  const { selectedGroup } = useGroup();
+
+  const sendMessage = useCallback(
+    async (prevData: unknown, formData: FormData) => {
+      try {
+        const text = formData.get("message") as string;
+        if (!text) return;
+        socket.emit(ESocket.NEW_MESSAGE, {
+          text,
+          groupId: selectedGroup?.id,
+        });
+      } catch (e) {
+        return;
+      }
+    },
+    [selectedGroup?.id]
+  );
+
+  const [state, formAction, isPending] = useActionState(sendMessage, undefined);
+
   return (
-    <form className="mt-4 flex items-center">
+    <form action={formAction} className="mt-4 flex items-center">
       <input
         type="text"
         name="message"
@@ -11,9 +36,10 @@ const NewMessage: React.FC = () => {
       />
       <button
         type="submit"
+        disabled={isPending}
         className="ml-2 bg-blue-600 p-3 rounded-lg hover:bg-blue-700 transition"
       >
-        Send
+        {isPending ? "..." : "Send"}
       </button>
     </form>
   );

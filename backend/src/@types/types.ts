@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+
 export type TUser = {
   id: string;
   name: string;
@@ -21,4 +23,8 @@ export type TMessage = {
   groupId: string;
   text: string;
   createdAt: number;
+};
+
+export type TCustomSocket = Socket & {
+  user?: TUser;
 };
