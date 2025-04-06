@@ -4,10 +4,11 @@ import { getFromStorage } from "../storage/Storage";
 
 const URL = "http://localhost:3000";
 
+const token = getFromStorage("token", "");
+
 export const socket = io(URL, {
-  auth: {
-    token: getFromStorage("token", ""),
-  },
+  autoConnect: token !== "",
+  auth: { token },
 });
 
 socket.on(ESocket.CONNECTION, () => console.log("Socket connected"));

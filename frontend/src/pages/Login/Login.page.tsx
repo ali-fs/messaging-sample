@@ -40,12 +40,14 @@ const Login: React.FC = () => {
             type="text"
             placeholder="Username"
             name={"Username"}
+            data-testid={"username"}
             className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="password"
             placeholder="Password"
             name={"Password"}
+            data-testid={"password"}
             className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {state?.error && (
@@ -54,6 +56,7 @@ const Login: React.FC = () => {
           <button
             type="submit"
             disabled={isPending}
+            data-testid={"login-btn"}
             className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
           >
             {isPending ? "Loading..." : "Login"}

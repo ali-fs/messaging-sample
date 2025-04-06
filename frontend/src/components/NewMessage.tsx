@@ -32,11 +32,13 @@ const NewMessage: React.FC = () => {
         type="text"
         name="message"
         placeholder="Type a message..."
+        data-testid="new-message"
         className="flex-1 p-3 border border-gray-600 bg-gray-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
         type="submit"
         disabled={isPending}
+        data-testid="send-message-btn"
         className="ml-2 bg-blue-600 p-3 rounded-lg hover:bg-blue-700 transition"
       >
         {isPending ? "..." : "Send"}
